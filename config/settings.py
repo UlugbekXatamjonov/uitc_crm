@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',  # new
     'drf_yasg',
     'django_filters',
+    "corsheaders",
+
 
     # local apps
     'mainapp',
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -132,7 +135,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static/"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -164,7 +172,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {  # second, minute, hour, day
         'anon': '5/minute',  # anonim
         'user': '5/minute',  # ro'yhatdan o'tgan user
-        'branch_trottle' : '7/minute'
+        'branch_trottle': '7/minute'
     }
 }
 
@@ -227,3 +235,24 @@ EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+
+""" Cors origin settings """
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    'http://uitccrm.pythonanywhere.com',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
